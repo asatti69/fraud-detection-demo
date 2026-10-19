@@ -1,0 +1,5 @@
+# Dataset (151 MB, too large for git)
+data/creditcard.csv
+
+# macOS
+.DS_Store
