@@ -3,3 +3,7 @@ data/creditcard.csv
 
 # macOS
 .DS_Store
+
+# Python
+.venv/
+__pycache__/

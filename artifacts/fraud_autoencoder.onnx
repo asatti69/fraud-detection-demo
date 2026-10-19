@@ -1,0 +1,565 @@
+
+pytorch2.14.1:èí
+«
+transactions
+val_14
+val_18
+val_18
+val_18slice_2node_slice_2"SliceJ>
+	namespace1: __main__.FraudScorer/slice_2: aten.slice.TensorJO
+pkg.torch.onnx.class_hierarchy-['__main__.FraudScorer', 'aten.slice.Tensor']J
+pkg.torch.onnx.fx_nodeu%slice_2 : [num_users=2] = call_function[target=torch.ops.aten.slice.Tensor](args = (%slice_1, 1, 0, 1), kwargs = {})J-
+pkg.torch.onnx.name_scopes['', 'slice_2']JŠ
+pkg.torch.onnx.stack_tracelFile "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 76, in forward
+    t = transactions[:, 0:1]
+­
+transactions
+val_18
+val_39
+val_18
+val_18slice_4node_slice_4"SliceJ>
+	namespace1: __main__.FraudScorer/slice_4: aten.slice.TensorJO
+pkg.torch.onnx.class_hierarchy-['__main__.FraudScorer', 'aten.slice.Tensor']J
+pkg.torch.onnx.fx_nodev%slice_4 : [num_users=1] = call_function[target=torch.ops.aten.slice.Tensor](args = (%slice_3, 1, 1, 29), kwargs = {})J-
+pkg.torch.onnx.name_scopes['', 'slice_4']J‹
+pkg.torch.onnx.stack_tracemFile "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 77, in forward
+    v = transactions[:, 1:29]
+´
+transactions
+val_39
+val_60
+val_18
+val_18slice_6node_slice_6"SliceJ>
+	namespace1: __main__.FraudScorer/slice_6: aten.slice.TensorJO
+pkg.torch.onnx.class_hierarchy-['__main__.FraudScorer', 'aten.slice.Tensor']J‘
+pkg.torch.onnx.fx_nodew%slice_6 : [num_users=1] = call_function[target=torch.ops.aten.slice.Tensor](args = (%slice_5, 1, 29, 30), kwargs = {})J-
+pkg.torch.onnx.name_scopes['', 'slice_6']J‘
+pkg.torch.onnx.stack_tracesFile "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 78, in forward
+    amount = transactions[:, 29:30]
+¢
+slice_2
+val_65divnode_div"DivJ8
+	namespace+: __main__.FraudScorer/div: aten.div.TensorJM
+pkg.torch.onnx.class_hierarchy+['__main__.FraudScorer', 'aten.div.Tensor']J‰
+pkg.torch.onnx.fx_nodeo%div : [num_users=1] = call_function[target=torch.ops.aten.div.Tensor](args = (%slice_2, 86400.0), kwargs = {})J)
+pkg.torch.onnx.name_scopes['', 'div']Jº
+pkg.torch.onnx.stack_trace›File "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 79, in forward
+    seconds_of_day = t - torch.floor(t / SECONDS_PER_DAY) * SECONDS_PER_DAY
+Ÿ
+divfloor
+node_floor"FloorJ=
+	namespace0: __main__.FraudScorer/floor: aten.floor.defaultJP
+pkg.torch.onnx.class_hierarchy.['__main__.FraudScorer', 'aten.floor.default']J‚
+pkg.torch.onnx.fx_nodeh%floor : [num_users=1] = call_function[target=torch.ops.aten.floor.default](args = (%div,), kwargs = {})J+
+pkg.torch.onnx.name_scopes['', 'floor']Jº
+pkg.torch.onnx.stack_trace›File "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 79, in forward
+    seconds_of_day = t - torch.floor(t / SECONDS_PER_DAY) * SECONDS_PER_DAY
+­
+floor
+val_65mul_14node_mul_14"MulJ;
+	namespace.: __main__.FraudScorer/mul_14: aten.mul.TensorJM
+pkg.torch.onnx.class_hierarchy+['__main__.FraudScorer', 'aten.mul.Tensor']JŠ
+pkg.torch.onnx.fx_nodep%mul_14 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%floor, 86400.0), kwargs = {})J,
+pkg.torch.onnx.name_scopes['', 'mul_14']Jº
+pkg.torch.onnx.stack_trace›File "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 79, in forward
+    seconds_of_day = t - torch.floor(t / SECONDS_PER_DAY) * SECONDS_PER_DAY
+¬
+slice_2
+mul_14sub_9
+node_sub_9"SubJ:
+	namespace-: __main__.FraudScorer/sub_9: aten.sub.TensorJM
+pkg.torch.onnx.class_hierarchy+['__main__.FraudScorer', 'aten.sub.Tensor']J‹
+pkg.torch.onnx.fx_nodeq%sub_9 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%slice_2, %mul_14), kwargs = {})J+
+pkg.torch.onnx.name_scopes['', 'sub_9']Jº
+pkg.torch.onnx.stack_trace›File "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 79, in forward
+    seconds_of_day = t - torch.floor(t / SECONDS_PER_DAY) * SECONDS_PER_DAY
+¦
+sub_9
+val_66mul_17node_mul_17"MulJ;
+	namespace.: __main__.FraudScorer/mul_17: aten.mul.TensorJM
+pkg.torch.onnx.class_hierarchy+['__main__.FraudScorer', 'aten.mul.Tensor']J”
+pkg.torch.onnx.fx_nodez%mul_17 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%sub_9, 6.283185307179586), kwargs = {})J,
+pkg.torch.onnx.name_scopes['', 'mul_17']J©
+pkg.torch.onnx.stack_traceŠFile "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 80, in forward
+    phase = 2 * math.pi * seconds_of_day / SECONDS_PER_DAY
+™
+mul_17
+val_65div_1
+node_div_1"DivJ:
+	namespace-: __main__.FraudScorer/div_1: aten.div.TensorJM
+pkg.torch.onnx.class_hierarchy+['__main__.FraudScorer', 'aten.div.Tensor']JŠ
+pkg.torch.onnx.fx_nodep%div_1 : [num_users=2] = call_function[target=torch.ops.aten.div.Tensor](args = (%mul_17, 86400.0), kwargs = {})J+
+pkg.torch.onnx.name_scopes['', 'div_1']J©
+pkg.torch.onnx.stack_traceŠFile "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 80, in forward
+    phase = 2 * math.pi * seconds_of_day / SECONDS_PER_DAY
+À
+slice_6
+val_67add_36node_add_36"AddJ;
+	namespace.: __main__.FraudScorer/add_36: aten.add.TensorJM
+pkg.torch.onnx.class_hierarchy+['__main__.FraudScorer', 'aten.add.Tensor']Jˆ
+pkg.torch.onnx.fx_noden%add_36 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%slice_6, 1.0), kwargs = {})J,
+pkg.torch.onnx.name_scopes['', 'add_36']JÍ
+pkg.torch.onnx.stack_trace®File "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 81, in forward
+    feats = torch.cat([v, torch.log(amount + 1.0), torch.sin(phase), torch.cos(phase)], dim=1)
+¦
+add_36lognode_log"LogJ9
+	namespace,: __main__.FraudScorer/log: aten.log.defaultJN
+pkg.torch.onnx.class_hierarchy,['__main__.FraudScorer', 'aten.log.default']J
+pkg.torch.onnx.fx_nodeg%log : [num_users=1] = call_function[target=torch.ops.aten.log.default](args = (%add_36,), kwargs = {})J)
+pkg.torch.onnx.name_scopes['', 'log']JÍ
+pkg.torch.onnx.stack_trace®File "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 81, in forward
+    feats = torch.cat([v, torch.log(amount + 1.0), torch.sin(phase), torch.cos(phase)], dim=1)
+¤
+div_1sinnode_sin"SinJ9
+	namespace,: __main__.FraudScorer/sin: aten.sin.defaultJN
+pkg.torch.onnx.class_hierarchy,['__main__.FraudScorer', 'aten.sin.default']J€
+pkg.torch.onnx.fx_nodef%sin : [num_users=1] = call_function[target=torch.ops.aten.sin.default](args = (%div_1,), kwargs = {})J)
+pkg.torch.onnx.name_scopes['', 'sin']JÍ
+pkg.torch.onnx.stack_trace®File "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 81, in forward
+    feats = torch.cat([v, torch.log(amount + 1.0), torch.sin(phase), torch.cos(phase)], dim=1)
+¤
+div_1cosnode_cos"CosJ9
+	namespace,: __main__.FraudScorer/cos: aten.cos.defaultJN
+pkg.torch.onnx.class_hierarchy,['__main__.FraudScorer', 'aten.cos.default']J€
+pkg.torch.onnx.fx_nodef%cos : [num_users=1] = call_function[target=torch.ops.aten.cos.default](args = (%div_1,), kwargs = {})J)
+pkg.torch.onnx.name_scopes['', 'cos']JÍ
+pkg.torch.onnx.stack_trace®File "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 81, in forward
+    feats = torch.cat([v, torch.log(amount + 1.0), torch.sin(phase), torch.cos(phase)], dim=1)
+Ý
+slice_4
+log
+sin
+coscatnode_cat"Concat*
+axis J9
+	namespace,: __main__.FraudScorer/cat: aten.cat.defaultJN
+pkg.torch.onnx.class_hierarchy,['__main__.FraudScorer', 'aten.cat.default']J˜
+pkg.torch.onnx.fx_node~%cat : [num_users=1] = call_function[target=torch.ops.aten.cat.default](args = ([%slice_4, %log, %sin, %cos], 1), kwargs = {})J)
+pkg.torch.onnx.name_scopes['', 'cat']JÍ
+pkg.torch.onnx.stack_trace®File "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 81, in forward
+    feats = torch.cat([v, torch.log(amount + 1.0), torch.sin(phase), torch.cos(phase)], dim=1)
+…
+cat
+mean_1sub_18node_sub_18"SubJ;
+	namespace.: __main__.FraudScorer/sub_18: aten.sub.TensorJM
+pkg.torch.onnx.class_hierarchy+['__main__.FraudScorer', 'aten.sub.Tensor']Jˆ
+pkg.torch.onnx.fx_noden%sub_18 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%cat, %b_mean), kwargs = {})J,
+pkg.torch.onnx.name_scopes['', 'sub_18']J–
+pkg.torch.onnx.stack_tracexFile "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 82, in forward
+    z = (feats - self.mean) / self.scale
+†
+sub_18
+scalediv_2
+node_div_2"DivJ:
+	namespace-: __main__.FraudScorer/div_2: aten.div.TensorJM
+pkg.torch.onnx.class_hierarchy+['__main__.FraudScorer', 'aten.div.Tensor']J‹
+pkg.torch.onnx.fx_nodeq%div_2 : [num_users=2] = call_function[target=torch.ops.aten.div.Tensor](args = (%sub_18, %b_scale), kwargs = {})J+
+pkg.torch.onnx.name_scopes['', 'div_2']J–
+pkg.torch.onnx.stack_tracexFile "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 82, in forward
+    z = (feats - self.mean) / self.scale
+ÿ
+
+div_2
+ae.encoder.0.weight
+ae.encoder.0.biaslinearnode_linear"Gemm*
+beta  €? *
+transB *
+alpha  €? *
+transA  J¸
+	namespaceª: __main__.FraudScorer/ae: __main__.Autoencoder/ae.encoder: torch.nn.modules.container.Sequential/ae.encoder.0: torch.nn.modules.linear.Linear/linear: aten.linear.defaultJµ
+pkg.torch.onnx.class_hierarchy’['__main__.FraudScorer', '__main__.Autoencoder', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.linear.Linear', 'aten.linear.default']J´
+pkg.torch.onnx.fx_node™%linear : [num_users=1] = call_function[target=torch.ops.aten.linear.default](args = (%div_2, %p_ae_encoder_0_weight, %p_ae_encoder_0_bias), kwargs = {})JP
+pkg.torch.onnx.name_scopes2['', 'ae', 'ae.encoder', 'ae.encoder.0', 'linear']J÷
+pkg.torch.onnx.stack_traceØFile "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 83, in forward
+    return torch.mean((self.ae(z) - z) ** 2, dim=1)
+  File "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 62, in forward
+    return self.decoder(self.encoder(z))
+  File "/Users/abdullahtariq/Desktop/fraud-demo/.venv/lib/python3.14/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/abdullahtariq/Desktop/fraud-demo/.venv/lib/python3.14/site-packages/torch/nn/modules/linear.py", line 134, in forward
+    return F.linear(input, self.weight, self.bias)
+à	
+linearrelu	node_relu"ReluJ¶
+	namespace¨: __main__.FraudScorer/ae: __main__.Autoencoder/ae.encoder: torch.nn.modules.container.Sequential/ae.encoder.1: torch.nn.modules.activation.ReLU/relu: aten.relu.defaultJµ
+pkg.torch.onnx.class_hierarchy’['__main__.FraudScorer', '__main__.Autoencoder', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.activation.ReLU', 'aten.relu.default']Jƒ
+pkg.torch.onnx.fx_nodei%relu : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%linear,), kwargs = {})JN
+pkg.torch.onnx.name_scopes0['', 'ae', 'ae.encoder', 'ae.encoder.1', 'relu']J÷
+pkg.torch.onnx.stack_traceØFile "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 83, in forward
+    return torch.mean((self.ae(z) - z) ** 2, dim=1)
+  File "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 62, in forward
+    return self.decoder(self.encoder(z))
+  File "/Users/abdullahtariq/Desktop/fraud-demo/.venv/lib/python3.14/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/abdullahtariq/Desktop/fraud-demo/.venv/lib/python3.14/site-packages/torch/nn/modules/activation.py", line 143, in forward
+    return F.relu(input, inplace=self.inplace)
+‡
+relu
+ae.encoder.2.weight
+ae.encoder.2.biaslinear_1node_linear_1"Gemm*
+beta  €? *
+transB *
+alpha  €? *
+transA  Jº
+	namespace¬: __main__.FraudScorer/ae: __main__.Autoencoder/ae.encoder: torch.nn.modules.container.Sequential/ae.encoder.2: torch.nn.modules.linear.Linear/linear_1: aten.linear.defaultJµ
+pkg.torch.onnx.class_hierarchy’['__main__.FraudScorer', '__main__.Autoencoder', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.linear.Linear', 'aten.linear.default']Jµ
+pkg.torch.onnx.fx_nodeš%linear_1 : [num_users=1] = call_function[target=torch.ops.aten.linear.default](args = (%relu, %p_ae_encoder_2_weight, %p_ae_encoder_2_bias), kwargs = {})JR
+pkg.torch.onnx.name_scopes4['', 'ae', 'ae.encoder', 'ae.encoder.2', 'linear_1']J÷
+pkg.torch.onnx.stack_traceØFile "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 83, in forward
+    return torch.mean((self.ae(z) - z) ** 2, dim=1)
+  File "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 62, in forward
+    return self.decoder(self.encoder(z))
+  File "/Users/abdullahtariq/Desktop/fraud-demo/.venv/lib/python3.14/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/abdullahtariq/Desktop/fraud-demo/.venv/lib/python3.14/site-packages/torch/nn/modules/linear.py", line 134, in forward
+    return F.linear(input, self.weight, self.bias)
+î	
+linear_1relu_1node_relu_1"ReluJ¸
+	namespaceª: __main__.FraudScorer/ae: __main__.Autoencoder/ae.encoder: torch.nn.modules.container.Sequential/ae.encoder.3: torch.nn.modules.activation.ReLU/relu_1: aten.relu.defaultJµ
+pkg.torch.onnx.class_hierarchy’['__main__.FraudScorer', '__main__.Autoencoder', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.activation.ReLU', 'aten.relu.default']J‡
+pkg.torch.onnx.fx_nodem%relu_1 : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%linear_1,), kwargs = {})JP
+pkg.torch.onnx.name_scopes2['', 'ae', 'ae.encoder', 'ae.encoder.3', 'relu_1']J÷
+pkg.torch.onnx.stack_traceØFile "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 83, in forward
+    return torch.mean((self.ae(z) - z) ** 2, dim=1)
+  File "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 62, in forward
+    return self.decoder(self.encoder(z))
+  File "/Users/abdullahtariq/Desktop/fraud-demo/.venv/lib/python3.14/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/abdullahtariq/Desktop/fraud-demo/.venv/lib/python3.14/site-packages/torch/nn/modules/activation.py", line 143, in forward
+    return F.relu(input, inplace=self.inplace)
+‹
+relu_1
+ae.decoder.0.weight
+ae.decoder.0.biaslinear_2node_linear_2"Gemm*
+beta  €? *
+transB *
+alpha  €? *
+transA  Jº
+	namespace¬: __main__.FraudScorer/ae: __main__.Autoencoder/ae.decoder: torch.nn.modules.container.Sequential/ae.decoder.0: torch.nn.modules.linear.Linear/linear_2: aten.linear.defaultJµ
+pkg.torch.onnx.class_hierarchy’['__main__.FraudScorer', '__main__.Autoencoder', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.linear.Linear', 'aten.linear.default']J·
+pkg.torch.onnx.fx_nodeœ%linear_2 : [num_users=1] = call_function[target=torch.ops.aten.linear.default](args = (%relu_1, %p_ae_decoder_0_weight, %p_ae_decoder_0_bias), kwargs = {})JR
+pkg.torch.onnx.name_scopes4['', 'ae', 'ae.decoder', 'ae.decoder.0', 'linear_2']J÷
+pkg.torch.onnx.stack_traceØFile "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 83, in forward
+    return torch.mean((self.ae(z) - z) ** 2, dim=1)
+  File "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 62, in forward
+    return self.decoder(self.encoder(z))
+  File "/Users/abdullahtariq/Desktop/fraud-demo/.venv/lib/python3.14/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/abdullahtariq/Desktop/fraud-demo/.venv/lib/python3.14/site-packages/torch/nn/modules/linear.py", line 134, in forward
+    return F.linear(input, self.weight, self.bias)
+î	
+linear_2relu_2node_relu_2"ReluJ¸
+	namespaceª: __main__.FraudScorer/ae: __main__.Autoencoder/ae.decoder: torch.nn.modules.container.Sequential/ae.decoder.1: torch.nn.modules.activation.ReLU/relu_2: aten.relu.defaultJµ
+pkg.torch.onnx.class_hierarchy’['__main__.FraudScorer', '__main__.Autoencoder', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.activation.ReLU', 'aten.relu.default']J‡
+pkg.torch.onnx.fx_nodem%relu_2 : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%linear_2,), kwargs = {})JP
+pkg.torch.onnx.name_scopes2['', 'ae', 'ae.decoder', 'ae.decoder.1', 'relu_2']J÷
+pkg.torch.onnx.stack_traceØFile "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 83, in forward
+    return torch.mean((self.ae(z) - z) ** 2, dim=1)
+  File "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 62, in forward
+    return self.decoder(self.encoder(z))
+  File "/Users/abdullahtariq/Desktop/fraud-demo/.venv/lib/python3.14/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/abdullahtariq/Desktop/fraud-demo/.venv/lib/python3.14/site-packages/torch/nn/modules/activation.py", line 143, in forward
+    return F.relu(input, inplace=self.inplace)
+‹
+relu_2
+ae.decoder.2.weight
+ae.decoder.2.biaslinear_3node_linear_3"Gemm*
+beta  €? *
+transB *
+alpha  €? *
+transA  Jº
+	namespace¬: __main__.FraudScorer/ae: __main__.Autoencoder/ae.decoder: torch.nn.modules.container.Sequential/ae.decoder.2: torch.nn.modules.linear.Linear/linear_3: aten.linear.defaultJµ
+pkg.torch.onnx.class_hierarchy’['__main__.FraudScorer', '__main__.Autoencoder', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.linear.Linear', 'aten.linear.default']J·
+pkg.torch.onnx.fx_nodeœ%linear_3 : [num_users=1] = call_function[target=torch.ops.aten.linear.default](args = (%relu_2, %p_ae_decoder_2_weight, %p_ae_decoder_2_bias), kwargs = {})JR
+pkg.torch.onnx.name_scopes4['', 'ae', 'ae.decoder', 'ae.decoder.2', 'linear_3']J÷
+pkg.torch.onnx.stack_traceØFile "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 83, in forward
+    return torch.mean((self.ae(z) - z) ** 2, dim=1)
+  File "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 62, in forward
+    return self.decoder(self.encoder(z))
+  File "/Users/abdullahtariq/Desktop/fraud-demo/.venv/lib/python3.14/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/abdullahtariq/Desktop/fraud-demo/.venv/lib/python3.14/site-packages/torch/nn/modules/linear.py", line 134, in forward
+    return F.linear(input, self.weight, self.bias)
+™
+linear_3
+div_2sub_28node_sub_28"SubJ;
+	namespace.: __main__.FraudScorer/sub_28: aten.sub.TensorJM
+pkg.torch.onnx.class_hierarchy+['__main__.FraudScorer', 'aten.sub.Tensor']JŒ
+pkg.torch.onnx.fx_noder%sub_28 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%linear_3, %div_2), kwargs = {})J,
+pkg.torch.onnx.name_scopes['', 'sub_28']J¢
+pkg.torch.onnx.stack_traceƒFile "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 83, in forward
+    return torch.mean((self.ae(z) - z) ** 2, dim=1)
+¡
+sub_28
+val_68pow_1
+node_pow_1"PowJA
+	namespace4: __main__.FraudScorer/pow_1: aten.pow.Tensor_ScalarJT
+pkg.torch.onnx.class_hierarchy2['__main__.FraudScorer', 'aten.pow.Tensor_Scalar']J‹
+pkg.torch.onnx.fx_nodeq%pow_1 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%sub_28, 2), kwargs = {})J+
+pkg.torch.onnx.name_scopes['', 'pow_1']J¢
+pkg.torch.onnx.stack_traceƒFile "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 83, in forward
+    return torch.mean((self.ae(z) - z) ** 2, dim=1)
+·
+pow_1
+val_18score	node_mean"
+ReduceMean*
+noop_with_empty_axes  *
+keepdims  J7
+	namespace*: __main__.FraudScorer/mean: aten.mean.dimJK
+pkg.torch.onnx.class_hierarchy)['__main__.FraudScorer', 'aten.mean.dim']J‚
+pkg.torch.onnx.fx_nodeh%mean : [num_users=1] = call_function[target=torch.ops.aten.mean.dim](args = (%pow_1, [1]), kwargs = {})J*
+pkg.torch.onnx.name_scopes['', 'mean']J¢
+pkg.torch.onnx.stack_traceƒFile "/Users/abdullahtariq/Desktop/fraud-demo/ml/train.py", line 83, in forward
+    return torch.mean((self.ae(z) - z) ** 2, dim=1)
+main_graph*ÞBae.encoder.0.weightJÀh'¿¶¨ˆ>Ô ¾^à>Nà½Ùíï½„i>ÛnY½éú©=¯YÖ>ª@ý½x/ˆ½w>ú÷›½´aë=¾´v¼ƒò=¼Ø~>Éµ>™ÁŸ>&)a=¦ª4¾ùç½z£¤¾kkW½‰¾†ŸÑ½þ€¾ôi¦=½Vf¼Lí[:eµ“¾Á°#>µ
+N½y ¾aøn>5.›=Ó.¦=ÁP‡½¡IŽ<,È=&2K½É½Ã4=‹ÿ¾IŽ=˜=ç/¾Àpj=-EÓ= Î.<Ë"€½^Éò½¿™×»®-i½ÄKÛ¼1mÒ=½‡ä½Iµì½<Ü­½E×ä<á-< ˆ¾VK`>[L>5Ü=P«.=%Œ²<>?„>Ôc$½lÎ=¦½I>®#l=F¸\;¦T½°@<à„ò=Ý½ŽB=ð´=XAe½ðÆw<hÏu=#Ò¨=ý(G¼ö->u„¾ŽZ¾ñ„,¾	d·¾ƒ˜v½çÔZ=§ÞÆ½åÓ™½ñ‰ª¾°[›¾…¬q¾é'1¾€m¾Ÿ‡B>0p©½o,}¿ZÕ«>>à·¾xsÃ?ÓL]¿¿Ü?]¨=Um¡¾€.Ñ¼Z ¾¶Y>Ö×”=0>(½•‚;<ì~>Êñ¾M²½ÉŸ½^ú%½iŒ>B1.½åÜ¡½¦ÖG¾í+m=‹”=ßh>w©½ºA»Ü,U½Š\~=IŸÜ=¶³k½¢Aè»•Ê>‡ ¾5Þ¬½Ø‹¾Î/H¾$e=l42¾3F=º¦}½¥ßð¼Y€˜¼ÏþŒ=ýÒ
+=•½½žÊÀ>ZZ¼TT>5^=™‚½ù¯¾=I¾8½\]¾(j>R¦>¨¾>ëÃ<Ú#½4hû;À¤<61À½	3ª½DfS=çN5<nÏ,=[sd½íŽ1=gÇê=%Ì>êŒ»¢«»ØJ
+¾dØ¬º‡;W>ƒ«½Á½õ¯œ½}%¾­¼a<søò¼&ˆ¾<Ìì5¾u,(¾ð_¾CZß¼+Ô™½Úž,½ë”>à™¾ÈÆ>â"7>…ªi>ž„¾›‚?>ƒ¸ >RÐ=Añº*á¦=O+L=¾Sû	>xÕ•»-“ž½G­:Ýíª=•í%¾?»»ú©_¾ô>¾²w>·/U½€»Œ½}3–¾W>(Ìg¾‰û?>Z{c½€“<õ”¾#8¿‡Õ¦½@$¼œ˜Ä<’ð†=C·¿¼%$>Å•Ó=×„=Cœ==ð…=L´€½OŽo>žò¾pÑ.=U=Œæ½tê;½$K´½Æ¿c<uÖ¼]¿½2uº4Cì¼¸+>(}£>^»´½ŠôÇ½å,h¾ŠQç;äµ—½ø<$ü¼3~ƒ¾iÏò=õó%¾ãï¸¼‘Tã½rá ½ øë½Ü]½¾¸k¾ÐÀ¼›[n=ôÁ“¼YSA¾d×»6èU<(`¾K!ô>ÇÃ¨½Ë¡>ø	¡¼Ù6M¼ÕEÜ;N0¿âÑD=æ(r=¬½,¾Fú=Ùƒ’>å€D=^éÉ¾6V·½´‚Ë<£¾Ñ&¡¼Ò‹;½¯¾³®½*Í¼E†½<!³=ÕŽ>õò>›i[¾dÐ >ÅÍC½û›»4ˆû½ H¸½pÁ˜¾	f¾¥pK>Ý¿ü<ÉLÕ¼ç¢ô> ß—>û„¾»±
+r¾("C¾q‰<Z~%=uçº¾!(>~KF½¼³+=€·=1E²½Þ£=åfL½=÷­<à8¾)o„<bÕÜ½µÙ1>Í½H»¾PÀ½¿·	<S¾?ÆS?TÄ¾†’Ì=11½@@¦;ÄŽ<j ¿‘§>ÚŠ>ž!I¾­àb>‰ t=û¶>ôO¾þ1ú½ÇÑS>ØÝ¾ÇÌ=), ¾äþÇ¾üÒ7=À3Ý½R¼ï½Ó<>W>ÆÀ½Ðªu½oN>Wˆ%½[v½¤Ž¾]3Ò½mPñ¾[Ø¹¾ðQˆ;%]=e_#=i§þ>v4"½¼ž=Ï˜ô=ÿo#½A±=®ÃÝ½sèÁ<Vä>ù¶’¾…Ú—>õÛ^¿ñY?•},?O{¾	–©=[æ®>XØÊ=.Þ½½½(C¶»*»½C!=*äqºµ„µ=eÑý<”¦G>É|>0–=Æ‚?»Þà¼ˆÆ±=Ñ<¾Â’½o `=ä´=5ÿ¾Ýbš>æœ?$zž=ÿÅs>Ýñ8¸•ê;6T½'F¾(¬¢¼è¡‰;Ôo,<(¡½#p=8¾Ã>4ÒÜ7aÿò<{°*½,ßã½Bc¢<F{<fÃ=~<<È˜ý>˜¿´uj¿]‚>	/>ŠÐ½}À>Stõ½à÷Q>-ô¶½¶e>‰ið>H6>JÉ½Ô`½æ¾~ /=0R¾çŒ€=ðÏ½†ñ½|x=u‘½H[>~þƒ='‹å<+}ý½71¹½¾ÿ¤¾P×”¼8ê“¼£c»r-¿‹]þ¾7ë½,†>_ãŽ>Îä:¾Ñær¾Ú˜Š<Ò½$½¯j¤<Í/=BsÈ½26=kMà½ˆ•==Äö¼û^d½?Jä»]Ù¯=ÓáP¾@½ˆ>®<>û;<¥>™?ž¾­ša>ÂM‡¾Ë(C=ZSŽ;/X¬¼*YBae.encoder.0.biasJ@Ho@5^Ñ?)Í°?5·¦?yÃ?§Ú?AÍ?­Õ®?†¸?±0â?!b?_÷¹?#?g‹?·çµ?I#¾*žBae.encoder.2.weightJ€	_\?ÅLŽ¾Ù¤>ŽíT¿.nµ>`¿?¾
+×a?†v>VCï=<éŽ>W <¸¿>?$k=¾/T?
+õÙ=”Éö=Çà>èW	?Õ Ó>:ºÝ¼¯¿_?ÜË>_7»¾0zo=ä>ÎBÃ¾²™C?×7
+=
+à>bÍ{>€z>‚;{? è€>§yr>P±?Bw?$E…=™8ª¾ê¦Ù=Íò€¾g÷’>Qö¿ÙÍ¾qÊ×½ãèD>u™þ½üÛ$?(µ?waF?y<>ÝZû>g 4¾4:	¿KB¡½½Ihq>†°µ= R½šÊ©>ùZ½8€>ÎD?%q½F*!>ôç¯>ô2•>ñ>KíÅ=ÞÌµ<ý¯½ŒùD?ñáÛ=íšu>è¥@¾î?©f§½V¶¿]>ÕŽÂ=qF>®Ø@?ÒJF>×c¿UŒƒ¾Ê_,>oú+?„xG>|#g½UrV?V|¾Ö•>*Ä>Ì›n¾$-Ô=8Ç€>¶ñ?½{½>—a;˜!¿,y^¾Ph?'Å?ƒ0©>¿äã<DÀ/¿Tg>I&?kØÆ>íÆn>jÄà½ÔbE={í?—JŸ=v>{¥û>è/Ž=»
+?:&;`4¢;5„¤>Ž€D?1?ÆõÍ>«G·¼áä>½‰Œ«>~¿i¾*9Bae.encoder.2.biasJ °„*>íÏŽ¾Ë?•ÀF>ÿÂÈ=a†J>v>¶Ð »*žBae.decoder.0.weightJ€Ú×=a²#¾Þ^‰=žXÍ¾$ïA?5º&½›+ç>·˜ê½0á2¾íl=«®=æ¶$?bHT>³¥<Eî#¿nwê>‘“"¿·¾8>Vc¬>x/Æ>§î>šh)¿j¨Õ¾³Ì>1Á.?]H¦>¾¿°>†Ö½2>ÌG >³²\¾Ú¨Â>f;™>øÕ¿¼$ñ<an-¾¹ E?zÑ¾+K>QV™½+˜Š¾ü0Z>Ôñƒ=üzà½)ºö>r/ª=ôêÇ>³/Ç>ýè
+?õò¾ªX®>Þ­>c?¿<ò)>=…>ŽË>GÐ¾“”Ë>*£>|ì¿`Y~>Î=ÑÃo>(¢%?;ø¿œ±q>0¦?äû»=¥þ¾]Ê¾bÂf¾s»)½X°×>­¡ý>pm<K >‹Ã>µSp¾|Oh¿ÍØ…¾	­=)
+>cwü¾ËP¾-Œ>)Üî>}Ç*??I¶¾ÓÜ¾e(¾DÚ>8mÁ>ãl„>÷_>FñŒ>MZä¾Ô{P>ëÏ>‡e=FÎž½aê›>£™Ð>ÿI¾0s>UVç»\Žá>Ð=¿Q©é¼ÍŠ¼æÕ¾Ê ö>Ûà4¾‡à­½Ÿ¹´½üìk¾¼ ±¾Ö"L>ºÏ=øŠ©¾0Èw;}€?ûñ—=Š.í>fŽi¿0@Ë¾=ÎX>ï^¾*YBae.decoder.0.biasJ@y†¦½KE»<¸§Y¾4þ½¿¦?1€ô¿9
+¾K²Ë¾‰¼n¾Å’x¿‡Ô½à{Þ>¯mí=„>#¾UE:?*ÞBae.decoder.2.weightJÀ'=r1¼>íéû½I]?˜~Õ¾¿}ñ¾4—¾’
+¹½öt¾lµ¿ß¥M>"NÁ=BRÒ=U½ìàî<õÑ<Þ·>fåß¾_µ¾5,¿½p>‡O­<= ?cX;¾>v­n¿dÈ	¾‘ƒ=>§6>dˆT¾·ç	¾äj>í ,¾úmŠ¾qÝ¾±e¿Òµæ>›}·¾9éÞ>íøb>Ym¿…Ð«¼UŽ¿°8y>,	¾•/“>\ï>=I]½q?+¨K½+¾”3c>9=¿gº#¼5¶Ê>?TÙ<<ã²¾ù¾Å=VŸÎ¾Ô&²=-ï§>kK¾ü;V>’®½`´¾½³‰¾I ¾€‘>7Öé¼ˆA>TÈ¾ÿ+$>NÂ?'Œ>·ƒx>ñ&å>4È‚¾E]½Ö{»u[¾‚(>(j½¾‹Û¾†¶>ÌB>5r\¾[–ë¾°a?—_¿P-Ð>a; ¾k”M>€«>
+`L>Ðº>Ïª¡¾ß0X¾§\™>áJ
+½è-ë·>‘C>¨os>®ÎW>ï>˜¾&ßÃ¾ ÁV½Ò¨½¿·ä< 1 ¾Ÿ”_>2å¾œj¬¾ûÌ½\­3½Häº¾2üD>K´q¾wòr>Ý*>ÝÝ>µR=—Û­>;àæ¾¨áT>Ýç£¾~G½<â¿ÇK¬¼¼Þð>Ä .¿E?>)É·½<ý¾_ÎR¾c#>L…>;±R>Ÿ¿>7Ð°¼¢vf¾ßÜ=|¨}½¿i˜=²/¾•¦Ò>7>î½‹i4?PQ¿™>Â½²ó¾ýb(¾…ºÄ> eñ½NÊ>­ŒA<³»‰>>Ð<ó¾^Ò½ƒgO>ÇLF¾ø?_Ó>7,Ý¼b€¾Úñ¼<¡8X¾U>Wk:>Ë	½gˆ½¨‚f¾â,Â½)°­==>Wã<0>sŽÞ¾ã	÷»úë¾¯ˆA¾%ê%>š&¾KÄp<J’·=˜=g=Bhù='ƒª½6—>…1õ=èµ=dç =€£¿½dÁ±>J¡Ä<§†´=%>µ|E¾ß‹>’r«½K\ã¼^ªE=3d¾F†ü=ßÛ¡¾HÊ¼¡Æ¾‰¢Ö>Ï›¼¾;¨.?BÑr½½>ýp9>Z/}¼Œ+=ÃjJ½%¶=£IÅ=†°x¾ö†¾Á#¾.¤,=¶Ù=ßI•=Š:¾x€?”Sï>è[Â¾\~M>$ƒÌ=G¹¾ò ¡=ö—…=sýL=þL©=h×}>ê€¾ôð=/.‡¾þ3¼zß<Ý
+ß='ùÊ½¿~š=‹–>VW¾¼zŠ=ÃeH<Aq>_+<–üb>’ >e*Ö¾À•D=EêË½ÍJ¤>ÙeT¾ÒçD>T;œ½PsÎ=4±I½Ò†ô=œ©•»­ò>"E¾ëÍ¾F5š¾“Æ6½ÚWM>=Žb>èKŒ>ÀÎÃ½ýX0¾1“>Ÿ4C½3ý“½¨Ï?à	½˜½>0*F¾ˆ%¢½çG¢=°Â¹ñ=2³E¾#oW¾5®¥¾( N¾-¥R=è ¿P¼¾}<ÜýI>ƒ	
+>Ù­7>Á ‹¾:•à½û	Œ<]”¦=Ü,{>–§¶=¸ðP>^&¾	Ã½"O>Ýîå><6P=c¥<ã#?•Ð¾ý±2>9ó¥>”?
+¿2NŠ=LiF¾V¾¢ß—;áŒä½ý—7½W´€¾ô!½£™">]4½Œ£‰¼ÛÓ=6->æ¤A> ö©½Ñwˆ¾˜È=KË¾þý1>;¬¾üó=
+Ã¶¾®ê[>þ >×Ù¾ï¢m¾ËƒÕ>?U‚¾8'%½­B)¾™—+<¼R5¾ë¿õ²¾è?Í=‰=—>|ƒM=ÀŸ#?)è
+>S;¾þ&î=:p¾H‚&>Þ¾D¾jöã=ÀÖW½ÈÙ>ç‚?ùçé<©,Z=½—â½w© ½pÏ?¾_…D>üðß=’«˜¾kÔ>9ÙŒ>â>äö¾™—[>ýW¿/?œ¨>}ÞŸ>ñ›‘¾šqÄ½µ,>8u>h‰>$°˜¾òÃ?wÅ ¿‹ÀÊ>il¾x5€¾Èù¿mÏ=ˆz>Ó)³»Ó½¶Nj>œ?n%>Œ›½_|Ü¾dŒ¾ÔÆ½;·^¾0‡¾ð³¼Zy¾¨Ö5>éØI>©ö»0i?èÎB?~ç>nQˆ¿ÀÊ½Nuã= ä¸=Ã‚>)û¾ò…(>ã¡,¿ÎÇØ>] ë=ÊàU½v§8>‰\?òõþ>jt›½ÿÔ
+¾–½àºBÛ”¾|Ã§=FÃ¦;Å3<‚í¬¾~ž>Q>ç¾0ûÄ>^£0¾ÃÚ\½ñì†>ž'­>Éq£¾Òë–½<ý÷=u Y=üM=ÀE=Ž7”=‘ª³¾H°>S?Ž1¢>ùñ®»BàÒ>\ã¿M—>ˆ¾Ú‡™½Ô,þ<®ß¾—&¾2dÁ>ÒÀ¥½W–½á‡=CK¾…>&Ù¡¼Nû=„Â¥>8-k½½¦¼<á;=Ks½zøz½‹½¨YJ¾YŠÕ<ê_?ÔU>#Gs¼å	ù<„¥„½ÏÚ=Ø#ß¾°‚;¡_>ÆîÔ<2|ù¼ï°%>ð;ú¼U„%=+¾ ½öD5>Ÿ¿*•Bae.decoder.2.biasJ|Íñ‡?9ð©>œ¸h?§¾¿©ˆ¾>Šqé¾"#ü¾t±´>NHÀ>]_©¾J¹¼·‡r=«ô[¾æî°¾Œ”¾–ÁC>ýô‘¾K¼ñ¾ä8´=sx•¿ž$»>ºc?án¾glû<œð^?Ì†Y¾øËð>¶9¿­U—¿ù)9¾Dÿ€>*‰BscaleJ|Þì?1Î?±?—š¯?^W«?÷Å¥?¶°š?ê"?~“?;fŒ?K†?ÂN’?2†?¶rz?Vs?@
+b?Ì·i?8»U?ÞP?EÐ9?ýc>?ÚÔ*?Q¢?~G?±Vî>X7û>…­È>^X>¾ Ô?0ï,?ˆ¾8?*Bval_14J        *Bval_18J       *Bval_39J       *Bval_60J       *ŠBmean_1J| è-¾Yü&=8oü>ƒð=WV4¾ vn=Ë5¥½fû={±š<Ùô¼!E>¸ÑÇ½‰…=IE¨=@P>.ú»a¾+=Ü®P½Šž¼ÒŒý<c¼ç¼†«½ié·¼g½<=ø¼=yiN<x÷;! ;I@jgþ½*º°½*Bval_65J À¨G*Bval_66JÛÉ@*Bval_67J  €?*Bval_68J   @ZÔ
+transactions
+
+batch
+"=
+/pkg.torch.export.graph_signature.InputSpec.kind
+USER_INPUT"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"1
+!pkg.torch.onnx.original_node_nametransactionsb„
+score
+	
+batch"?
+0pkg.torch.export.graph_signature.OutputSpec.kindUSER_OUTPUT")
+!pkg.torch.onnx.original_node_namemeanjÞ
+ae.encoder.0.weight
+
+
+"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone":
+!pkg.torch.onnx.original_node_namep_ae_encoder_0_weightjÖ
+ae.encoder.0.bias
+
+
+"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"8
+!pkg.torch.onnx.original_node_namep_ae_encoder_0_biasjÞ
+ae.encoder.2.weight
+
+
+"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone":
+!pkg.torch.onnx.original_node_namep_ae_encoder_2_weightjÖ
+ae.encoder.2.bias
+
+
+"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"8
+!pkg.torch.onnx.original_node_namep_ae_encoder_2_biasjÞ
+ae.decoder.0.weight
+
+
+"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone":
+!pkg.torch.onnx.original_node_namep_ae_decoder_0_weightjÖ
+ae.decoder.0.bias
+
+
+"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"8
+!pkg.torch.onnx.original_node_namep_ae_decoder_0_biasjÞ
+ae.decoder.2.weight
+
+
+"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone":
+!pkg.torch.onnx.original_node_namep_ae_decoder_2_weightjÖ
+ae.decoder.2.bias
+
+
+"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"8
+!pkg.torch.onnx.original_node_namep_ae_decoder_2_biasj»
+scale
+
+
+"9
+/pkg.torch.export.graph_signature.InputSpec.kindBUFFER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentTrue",
+!pkg.torch.onnx.original_node_nameb_scalej[
+val_14
+
+
+"E
+$pkg.onnxscript.optimizer.folded_from['val_0', 'val_12', 'val_13']j\
+val_18
+
+
+"F
+$pkg.onnxscript.optimizer.folded_from['val_15', 'val_16', 'val_17']j\
+val_39
+
+
+"F
+$pkg.onnxscript.optimizer.folded_from['val_36', 'val_37', 'val_38']j\
+val_60
+
+
+"F
+$pkg.onnxscript.optimizer.folded_from['val_57', 'val_58', 'val_59']j»
+mean_1
+
+
+"9
+/pkg.torch.export.graph_signature.InputSpec.kindBUFFER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentTrue"+
+!pkg.torch.onnx.original_node_nameb_meanj
+val_65
+ j
+val_66
+ j
+val_67
+ j
+val_68
+ j
+slice_2
+
+batch
+j
+slice_4
+
+batch
+j
+slice_6
+
+batch
+j
+div
+
+batch
+j
+floor
+
+batch
+j
+mul_14
+
+batch
+j
+sub_9
+
+batch
+j
+mul_17
+
+batch
+j
+div_1
+
+batch
+j
+add_36
+
+batch
+j
+log
+
+batch
+j
+sin
+
+batch
+j
+cos
+
+batch
+j
+cat
+
+batch
+j
+sub_18
+
+batch
+j
+div_2
+
+batch
+j
+linear
+
+batch
+j
+relu
+
+batch
+j
+linear_1
+
+batch
+j
+relu_1
+
+batch
+j
+linear_2
+
+batch
+j
+relu_2
+
+batch
+j
+linear_3
+
+batch
+j
+sub_28
+
+batch
+j
+pow_1
+
+batch
+‚±
+0pkg.torch.export.ExportedProgram.graph_signatureü
+# inputs
+p_ae_encoder_0_weight: PARAMETER target='ae.encoder.0.weight'
+p_ae_encoder_0_bias: PARAMETER target='ae.encoder.0.bias'
+p_ae_encoder_2_weight: PARAMETER target='ae.encoder.2.weight'
+p_ae_encoder_2_bias: PARAMETER target='ae.encoder.2.bias'
+p_ae_decoder_0_weight: PARAMETER target='ae.decoder.0.weight'
+p_ae_decoder_0_bias: PARAMETER target='ae.decoder.0.bias'
+p_ae_decoder_2_weight: PARAMETER target='ae.decoder.2.weight'
+p_ae_decoder_2_bias: PARAMETER target='ae.decoder.2.bias'
+b_mean: BUFFER target='mean' persistent=True
+b_scale: BUFFER target='scale' persistent=True
+transactions: USER_INPUT
+
+# outputs
+mean: USER_OUTPUT
+‚I
+2pkg.torch.export.ExportedProgram.range_constraints{s3: VR[0, int_oo]}B
+ 
