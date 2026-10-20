@@ -1,0 +1,18 @@
+{
+  "name": "fraud-replay",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Replays data/replay.csv through the fraud scoring API and broadcasts results over WebSocket",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node src/server.js --mode=demo",
+    "replay": "node src/server.js --mode=replay",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "ws": "8.22.0"
+  }
+}

@@ -10,3 +10,6 @@ __pycache__/
 
 # Java build output
 api/target/
+
+# Node
+node_modules/
