@@ -8,6 +8,7 @@ import { createReplayServer } from '../src/server.js';
 
 const THRESHOLD = 6.745466810943141;
 let fakeApiDown = false;
+let fakeFlagAll = false;
 let fakeApi;
 let replay;
 let base;
@@ -24,7 +25,7 @@ before(async () => {
     req.on('data', (c) => (body += c));
     req.on('end', () => {
       const tx = JSON.parse(body);
-      const score = tx.Amount === 127.14 ? 10 : 1; // the demo fraud scores high, everything else low
+      const score = fakeFlagAll || tx.Amount === 127.14 ? 10 : 1; // the demo fraud scores high, everything else low
       json(res, { id: tx.id, score, threshold: THRESHOLD, flagged: score >= THRESHOLD, modelVersion: 'fake-model', latencyMs: 0.05 });
     });
   });
@@ -107,6 +108,27 @@ test('HTTP health and metrics proxy', async () => {
   assert.equal(health.api.connected, true);
   assert.equal(health.api.modelVersion, 'fake-model');
   assert.deepEqual(await getJson('/metrics'), { test: { tp: 31 } });
+});
+
+test('snapshots carry the last 5 alerts, so a refreshed dashboard rebuilds its alerts panel', async () => {
+  const client = await connect();
+  fakeFlagAll = true;
+  client.send({ type: 'control', action: 'restart' });
+  await client.next((m) => m.type === 'reset');
+  let last;
+  for (let i = 0; i < 7; i++) last = (await client.next((m) => m.type === 'scored')).event;
+  fakeFlagAll = false;
+  client.close();
+
+  const refreshed = await connect(); // a page refresh is a new connection
+  const hello = await refreshed.next((m) => m.type === 'hello');
+  assert.equal(hello.recentAlerts.length, 5);
+  assert.ok(hello.recentAlerts.every((e) => e.flagged));
+  assert.equal(hello.recentAlerts.at(-1).seq >= last.seq, true);
+  refreshed.send({ type: 'control', action: 'restart' });
+  const reset = await refreshed.next((m) => m.type === 'reset');
+  assert.deepEqual(reset.recentAlerts, []);
+  refreshed.close();
 });
 
 function json(res, body) {

@@ -13,3 +13,6 @@ api/target/
 
 # Node
 node_modules/
+
+# Dashboard build output
+dashboard/dist/

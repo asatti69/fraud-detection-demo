@@ -5,7 +5,7 @@
 //         GET  /state    full snapshot (same as the WebSocket hello message)
 //         GET  /metrics  held-out test metrics, proxied from the Java API
 //         POST /control  {"action": "start" | "pause" | "resume" | "restart" | "rate", "rate": 3}
-//   WS    /ws            server -> client: hello, reset, scored, status, config
+//   WS    /ws            server -> client: hello, reset (snapshots incl. recent + recentAlerts), scored, status, config
 //                        client -> server: {"type": "control", "action": ..., "rate": ...}
 import http from 'node:http';
 import path from 'node:path';
@@ -17,6 +17,7 @@ import { addToTotals, emptyTotals, outcome } from './totals.js';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 export const RATE_LIMITS = { min: 2, max: 5 };
 const RECENT_LIMIT = 100;
+const RECENT_ALERTS_LIMIT = 5; // kept separately so alerts survive after their events leave `recent`
 const RETRY_MS = 1000;
 
 const REPLAY_NOTE =
@@ -49,6 +50,7 @@ export function createReplayServer(options = {}) {
   let position = 0;
   let totals = emptyTotals();
   let recent = [];
+  let recentAlerts = [];
   let seq = 0;
   let runId = 0;
   let startedAt = null;
@@ -111,6 +113,7 @@ export function createReplayServer(options = {}) {
       position,
       totals,
       recent,
+      recentAlerts,
     };
   }
 
@@ -120,6 +123,7 @@ export function createReplayServer(options = {}) {
     position = 0;
     totals = emptyTotals();
     recent = [];
+    recentAlerts = [];
     seq = 0;
     startedAt = Date.now();
     nextDueAt = startedAt;
@@ -246,6 +250,7 @@ export function createReplayServer(options = {}) {
       };
       totals = addToTotals(totals, event);
       recent = [...recent.slice(-(RECENT_LIMIT - 1)), event];
+      if (event.flagged) recentAlerts = [...recentAlerts.slice(-(RECENT_ALERTS_LIMIT - 1)), event];
       position++;
       broadcast({ type: 'scored', event, totals, position });
       if (event.flagged || event.scripted) {
