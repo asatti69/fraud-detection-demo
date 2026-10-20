@@ -58,3 +58,31 @@ export function tradeoffPoints(m: Metrics): TradeoffPoint[] {
     .filter((p) => p.alertRate > 0)
     .sort((a, b) => a.alertRate - b.alertRate);
 }
+
+export interface SensitivitySteps {
+  points: TradeoffPoint[];
+  /** Index of the threshold chosen on validation data (the live threshold). */
+  defaultIndex: number;
+}
+
+/** The slider's snap points: every trade-off point, ordered from fewest to most alerts. */
+export function sensitivitySteps(m: Metrics): SensitivitySteps {
+  const points = tradeoffPoints(m);
+  return { points, defaultIndex: points.findIndex((p) => p.current) };
+}
+
+export interface WhatIfReadout {
+  threshold: string;
+  casesCaught: string;
+  dollarsCaught: string;
+  alertsPer100k: string;
+}
+
+export function whatIfReadout(p: TradeoffPoint): WhatIfReadout {
+  return {
+    threshold: p.threshold.toFixed(2),
+    casesCaught: pct(p.casesCaught),
+    dollarsCaught: pct(p.dollarsCaught),
+    alertsPer100k: count(Math.round(p.alertRate * 100_000)),
+  };
+}

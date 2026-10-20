@@ -1,10 +1,20 @@
-import { impactSummary, tradeoffPoints } from '../metrics.ts';
+import { impactSummary } from '../metrics.ts';
+import type { SensitivitySteps } from '../metrics.ts';
 import type { Metrics } from '../types.ts';
 import { TradeoffChart } from './TradeoffChart.tsx';
+import { WhatIfSlider } from './WhatIfSlider.tsx';
 
-/** Business impact, from artifacts/metrics.json only (held-out test results). */
-export function ImpactPanel({ metrics, error }: { metrics: Metrics | null; error: string | null }) {
-  if (!metrics) {
+interface Props {
+  metrics: Metrics | null;
+  error: string | null;
+  steps: SensitivitySteps | null;
+  whatIfIndex: number;
+  onWhatIfChange: (i: number) => void;
+}
+
+/** Business impact, from artifacts/metrics.json only (held-out test results). The headline never follows the slider. */
+export function ImpactPanel({ metrics, error, steps, whatIfIndex, onWhatIfChange }: Props) {
+  if (!metrics || !steps) {
     return (
       <section className="card impact" aria-busy="true">
         <p className="eyebrow">Results on held-out test data</p>
@@ -29,7 +39,8 @@ export function ImpactPanel({ metrics, error }: { metrics: Metrics | null; error
         <p className="muted">Unusual isn't always fraud: large legitimate purchases also score high.</p>
       </div>
 
-      <TradeoffChart points={tradeoffPoints(metrics)} />
+      <WhatIfSlider steps={steps} index={whatIfIndex} onChange={onWhatIfChange} />
+      <TradeoffChart points={steps.points} selected={steps.points[whatIfIndex]} />
     </section>
   );
 }

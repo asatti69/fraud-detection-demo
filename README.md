@@ -157,7 +157,11 @@ point by looking at test results.
 | 4.14% | 85.3% | 2.7% | 69.3% |
 | 9.21% | 88.0% | 1.3% | 69.6% |
 
-The full sweep is in `metrics.json` under `threshold_sweep`. Note that the very highest
+The full sweep is in `metrics.json` under `threshold_sweep`. On the dashboard, the **Sensitivity**
+slider steps through these same points (plus the chosen one) and shows the fraud cases caught,
+fraud dollars caught and alerts per 100,000 transactions at each. It's display-only: it moves the
+threshold drawn on the charts, but the API's live alerts always use the validation-chosen threshold,
+and the headline numbers never change. Restart returns it to the default. Note that the very highest
 scores are all false alarms: the first fraud appears only once about 0.18% of
 transactions are flagged.
 

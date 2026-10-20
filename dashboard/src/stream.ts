@@ -18,6 +18,8 @@ export interface StreamState {
   totals: Totals | null;
   events: ScoredEvent[];
   alerts: ScoredEvent[];
+  /** Increments on every run reset (Restart or loop), so the UI can reset what-if settings. */
+  resets: number;
 }
 
 export type StreamAction = { type: 'connection'; connection: Connection } | { type: 'message'; message: ServerMessage };
@@ -33,6 +35,7 @@ export const initialStreamState: StreamState = {
   totals: null,
   events: [],
   alerts: [],
+  resets: 0,
 };
 
 export function streamReducer(state: StreamState, action: StreamAction): StreamState {
@@ -54,6 +57,7 @@ export function streamReducer(state: StreamState, action: StreamAction): StreamS
         totals: msg.totals,
         events: msg.recent.slice(-MAX_EVENTS),
         alerts: msg.recentAlerts.slice(-MAX_ALERTS),
+        resets: msg.type === 'reset' ? state.resets + 1 : state.resets,
       };
     case 'scored':
       if (state.events.at(-1)?.seq === msg.event.seq) return state;

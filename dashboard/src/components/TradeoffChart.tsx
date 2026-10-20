@@ -24,10 +24,14 @@ const SERIES = [
   { key: 'dollarsCaught', label: 'Fraud dollars', className: 'series-2' },
 ] as const;
 
-/** Share of fraud cases and fraud dollars caught vs. share of transactions flagged, across thresholds. */
-export function TradeoffChart({ points }: { points: TradeoffPoint[] }) {
+/**
+ * Share of fraud cases and fraud dollars caught vs. share of transactions flagged, across thresholds.
+ * `selected` is the sensitivity slider's setting; the default (validation-chosen) threshold stays marked.
+ */
+export function TradeoffChart({ points, selected }: { points: TradeoffPoint[]; selected: TradeoffPoint }) {
   const [hover, setHover] = useState<TradeoffPoint | null>(null);
   const current = points.find((p) => p.current)!;
+  const isWhatIf = !selected.current;
   const last = points.at(-1)!;
 
   const onMove = (e: MouseEvent<SVGRectElement>) => {
@@ -59,14 +63,19 @@ export function TradeoffChart({ points }: { points: TradeoffPoint[] }) {
           ))}
           <text x={M.left + PLOT_W / 2} y={H - 8} className="axis-title" textAnchor="middle">Transactions flagged (log scale)</text>
 
-          <line x1={xScale(current.alertRate)} x2={xScale(current.alertRate)} y1={M.top - 6} y2={M.top + PLOT_H} className="current-line" />
-          <text x={xScale(current.alertRate)} y={M.top - 14} className="mark-label" textAnchor="middle">Current threshold</text>
+          {isWhatIf && (
+            <line x1={xScale(current.alertRate)} x2={xScale(current.alertRate)} y1={M.top} y2={M.top + PLOT_H} className="default-line" />
+          )}
+          <line x1={xScale(selected.alertRate)} x2={xScale(selected.alertRate)} y1={M.top - 6} y2={M.top + PLOT_H} className="current-line" />
+          <text x={xScale(selected.alertRate)} y={M.top - 14} className="mark-label" textAnchor={xScale(selected.alertRate) > M.left + PLOT_W - 40 ? 'end' : 'middle'}>
+            {isWhatIf ? 'What-if' : 'Default threshold'}
+          </text>
 
           {SERIES.map((s) => (
             <g key={s.key}>
               <polyline points={points.map((p) => `${xScale(p.alertRate)},${yScale(p[s.key])}`).join(' ')} className={`line ${s.className}`} />
               {points.map((p) => (
-                <circle key={p.alertRate} cx={xScale(p.alertRate)} cy={yScale(p[s.key])} r={p.current ? 7 : 4} className={`dot ${s.className}`} />
+                <circle key={p.alertRate} cx={xScale(p.alertRate)} cy={yScale(p[s.key])} r={p === selected ? 7 : 4} className={`dot ${s.className}`} />
               ))}
               <text x={xScale(last.alertRate) + 12} y={yScale(last[s.key])} className="end-label" dominantBaseline="middle">
                 {s.label} {pct(last[s.key])}
@@ -79,7 +88,7 @@ export function TradeoffChart({ points }: { points: TradeoffPoint[] }) {
         </svg>
         {hover && (
           <div className="tooltip" style={{ left: `${(xScale(hover.alertRate) / W) * 100}%`, top: `${(M.top / H) * 100}%` }}>
-            <strong>{pct(hover.alertRate)} flagged{hover.current ? ' (current)' : ''}</strong>
+            <strong>{pct(hover.alertRate)} flagged{hover.current ? ' (default)' : ''}</strong>
             <span>Fraud cases caught: {pct(hover.casesCaught)}</span>
             <span>Fraud dollars caught: {pct(hover.dollarsCaught)}</span>
           </div>

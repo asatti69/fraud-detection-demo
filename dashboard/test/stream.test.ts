@@ -67,3 +67,11 @@ test('a refresh rebuilds recent alerts from the snapshot, even when they are old
   assert.deepEqual(s.alerts.map((e) => e.seq), [10, 20, 30, 40, 50]);
   assert.equal(s.events.length, 2);
 });
+
+test('resets counts Restart/loop resets but not hello, so a reconnect keeps the what-if setting', () => {
+  let s = streamReducer(initialStreamState, { type: 'message', message: snapshot('hello', []) });
+  assert.equal(s.resets, 0);
+  s = streamReducer(s, { type: 'message', message: snapshot('reset', []) });
+  s = streamReducer(s, { type: 'message', message: snapshot('reset', []) });
+  assert.equal(s.resets, 2);
+});

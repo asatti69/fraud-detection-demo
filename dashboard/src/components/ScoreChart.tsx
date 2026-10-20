@@ -24,13 +24,22 @@ function diamond(cx: number, cy: number, r: number): string {
   return `M${cx},${cy - r} L${cx + r},${cy} L${cx},${cy + r} L${cx - r},${cy} Z`;
 }
 
-/** Live scores for the most recent transactions, on a log scale, with the alert threshold. */
-export function ScoreChart({ events, threshold }: { events: ScoredEvent[]; threshold: number | null }) {
+/**
+ * Live scores for the most recent transactions, on a log scale, with the alert threshold.
+ * `whatIfThreshold` (from the sensitivity slider) is drawn as a second line; it is display-only,
+ * so dot colors keep showing the API's live decisions at `threshold`.
+ */
+export function ScoreChart({ events, threshold, whatIfThreshold }: { events: ScoredEvent[]; threshold: number | null; whatIfThreshold: number | null }) {
   const [hovered, setHovered] = useState<ScoredEvent | null>(null);
   const visible = events.slice(-WINDOW);
   const lastSeq = visible.at(-1)?.seq ?? WINDOW;
   const firstSeq = lastSeq - WINDOW + 1;
   const x = (seq: number) => M.left + ((seq - firstSeq) / (WINDOW - 1)) * PLOT_W;
+  const showWhatIf = whatIfThreshold !== null && threshold !== null && whatIfThreshold !== threshold;
+  // Keep the two right-hand labels from overlapping when the thresholds are close.
+  const liveLabelY = threshold !== null ? yScale(threshold) : 0;
+  let whatIfLabelY = showWhatIf ? yScale(whatIfThreshold) : 0;
+  if (showWhatIf && Math.abs(whatIfLabelY - liveLabelY) < 18) whatIfLabelY = liveLabelY + (whatIfLabelY >= liveLabelY ? 18 : -18);
 
   return (
     <figure className="chart">
@@ -40,7 +49,10 @@ export function ScoreChart({ events, threshold }: { events: ScoredEvent[]; thres
           <li><svg width="16" height="16" aria-hidden="true"><circle cx="8" cy="8" r="5" className="mark-pass" /></svg>Passed</li>
           <li><svg width="16" height="16" aria-hidden="true"><circle cx="8" cy="8" r="6" className="mark-alert" /></svg>Alerted</li>
           <li><svg width="18" height="18" aria-hidden="true"><path d={diamond(9, 9, 7)} className="mark-key" /></svg>Actually fraud</li>
-          <li><svg width="22" height="16" aria-hidden="true"><line x1="1" x2="21" y1="8" y2="8" className="threshold-line" /></svg>Alert threshold</li>
+          <li><svg width="22" height="16" aria-hidden="true"><line x1="1" x2="21" y1="8" y2="8" className="threshold-line" /></svg>{showWhatIf ? 'Live' : 'Alert threshold'}</li>
+          {showWhatIf && (
+            <li><svg width="22" height="16" aria-hidden="true"><line x1="1" x2="21" y1="8" y2="8" className="whatif-line" /></svg>What-if</li>
+          )}
         </ul>
       </figcaption>
       <div className="chart-frame">
@@ -60,8 +72,16 @@ export function ScoreChart({ events, threshold }: { events: ScoredEvent[]; thres
           {threshold !== null && (
             <g>
               <line x1={M.left} x2={W - M.right} y1={yScale(threshold)} y2={yScale(threshold)} className="threshold-line" />
-              <text x={W - M.right + 10} y={yScale(threshold)} className="threshold-label" dominantBaseline="middle">
-                Threshold {threshold.toFixed(2)}
+              <text x={W - M.right + 10} y={liveLabelY} className="threshold-label" dominantBaseline="middle">
+                {showWhatIf ? 'Live' : 'Threshold'} {threshold.toFixed(2)}
+              </text>
+            </g>
+          )}
+          {showWhatIf && (
+            <g>
+              <line x1={M.left} x2={W - M.right} y1={yScale(whatIfThreshold)} y2={yScale(whatIfThreshold)} className="whatif-line" />
+              <text x={W - M.right + 10} y={whatIfLabelY} className="whatif-label" dominantBaseline="middle">
+                What-if {whatIfThreshold.toFixed(2)}
               </text>
             </g>
           )}

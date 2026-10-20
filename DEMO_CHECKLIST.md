@@ -21,7 +21,8 @@
 ## Right before you start
 
 - [ ] Press **Restart** on the dashboard. The scripted fraud ($127.14) plays **20 seconds**
-      after Restart, and the stream runs about 11.5 minutes before looping.
+      after Restart, and the stream runs about 11.5 minutes before looping. Restart also returns
+      the Sensitivity slider to its default.
 
 ## Run of show (about 7 minutes)
 
@@ -32,7 +33,7 @@
 | 1:00 | Counters, feed, Recent alerts. | "False alarms and misses show up too. Blue diamonds below the line are frauds it let through. This stream is enriched with fraud, so it shows counts, not rates." |
 | 2:30 | "About 1 in 8 alerts…" line. | "An alert is about 100 times more likely to be fraud than a random transaction. That's what decides analyst productivity." |
 | 3:30 | Fraud dollars. | "Only 6% of fraud dollars. 'Unusual' isn't 'fraud': big legitimate purchases score high too. I'd pair this with a supervised model for high-value transactions." |
-| 4:30 | Trade-off chart, hover a point. | "The threshold is your decision. Flag 1% and you catch two-thirds of cases. Your alert capacity picks the point." |
+| 4:30 | Drag the **Sensitivity** slider to about 1%. | "The threshold is your decision. Flag 1% and you catch two-thirds of cases, at about 1,000 alerts per 100,000 transactions. Your alert capacity picks the point. This is a what-if on the same held-out data; live alerts keep using the default." |
 | 5:30 | Architecture (header line, or README). | "Trained in Python, shipped as one ONNX file, scored in Java, the stack you already run. A test proves Java matches Python on every replay transaction." |
 | 6:30 | Pause. | Questions. |
 
@@ -55,7 +56,7 @@
 | 13 | Notification pops up while sharing | Do Not Disturb is off | Turn it on beforehand. |
 | 14 | Wi-Fi drops | – | Nothing: everything runs locally and needs no internet. |
 | 15 | First build takes long or fails | Missing packages on a fresh machine (`npm ci` or Maven needs the internet) | Run `./start.sh` once the day before, so everything is built and cached. |
-| 16 | Interviewer asks to change the threshold live | Not supported in the UI | Use the trade-off chart: hover the 1% point and walk through it. |
+| 16 | Interviewer asks to change the threshold live | The slider is display-only by design | Move the Sensitivity slider and read the what-if numbers. Explain that the live API threshold changes only through a reviewed release, which is how a bank would want it. |
 | 17 | Everything fails | – | Show `docs/screenshots/` and walk through the same story. Say what you'd check. Calm recovery is part of the job. |
 
 ## Questions to expect

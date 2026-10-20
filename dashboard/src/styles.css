@@ -147,6 +147,17 @@ h3 { font-size: 1.05rem; font-weight: 650; }
 .threshold-label { fill: var(--ink); font-size: 15px; font-weight: 650; }
 .threshold-line { stroke: var(--critical); stroke-width: 2; stroke-dasharray: 8 6; }
 .current-line { stroke: var(--ink-2); stroke-width: 1.5; }
+.default-line { stroke: var(--axis); stroke-width: 1.5; }
+.whatif-line { stroke: var(--ink-2); stroke-width: 2; }
+.whatif-label { fill: var(--ink-2); font-size: 15px; font-weight: 650; }
+.whatif { display: grid; gap: 8px; padding: 14px 16px; border-radius: 12px; background: var(--page); border: 1px solid var(--border); }
+.whatif-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.whatif input[type='range'] { width: 100%; margin: 6px 0 0; accent-color: var(--series-1); height: 28px; cursor: pointer; }
+.whatif input[type='range']:focus-visible { outline: 3px solid var(--series-1); outline-offset: 2px; }
+.whatif-ends { display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: -4px; }
+.whatif-readout { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.readout-value { font-size: 1.6rem; font-weight: 650; line-height: 1.2; }
+.whatif-note { font-size: 0.8rem; }
 .crosshair { stroke: var(--ink-muted); stroke-width: 1; }
 .mark-pass { fill: var(--series-1); stroke: var(--surface); stroke-width: 2; }
 .mark-alert { fill: var(--critical); stroke: var(--surface); stroke-width: 2; }
