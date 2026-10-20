@@ -41,35 +41,44 @@ interview questions before reading the model answers. Finish with the self-quiz 
 scores new transactions against that, and a dashboard shows the scores live next to honest
 results measured on data the model never saw.
 
+The project runs in **two separate stages**.
+
+**Stage 1: prepare (once, before the demo).** One Python script reads the dataset and writes
+three files. Python is not used during the demo.
+
 ```
-                 OFFLINE (run once, Python)                         ONLINE (the live demo)
- ┌──────────────────────────────────────────────┐
- │ data/creditcard.csv  284,807 transactions    │
- │        │                                     │
- │        ▼  ml/train.py                        │
- │  split by time → features → autoencoder      │
- │  → threshold on validation → test once       │
- │        │                                     │
- │        ├─► artifacts/metrics.json ───────────┼──► GET /metrics ─┐
- │        ├─► artifacts/fraud_autoencoder.onnx ─┼──► loaded by ────┤
- │        └─► data/replay.csv ──────────────────┼──► read by ──┐   │
- └──────────────────────────────────────────────┘              │   │
-                                                               │   ▼
-  ┌──────────────────────┐  POST /score (3/s)   ┌──────────────┴──────────────┐
-  │ Node replay server   │ ───────────────────► │ Java Spring Boot API :8080  │
-  │ :8081                │ ◄─────────────────── │ ONNX Runtime scores each    │
-  │ plays replay.csv,    │   score, flagged     │ transaction, JSON logs      │
-  │ running totals       │                      └─────────────────────────────┘
-  └──────────┬───────────┘
-             │ WebSocket /ws (pushes every result)  +  GET /metrics (passed through)
-             ▼
-  ┌──────────────────────────────────────────────────────────────┐
-  │ React + TypeScript dashboard :5173                           │
-  │ live score chart · counters · feed · recent alerts ·         │
-  │ held-out results panel · trade-off chart · what-if slider    │
-  └──────────────────────────────────────────────────────────────┘
-  start.sh starts all three in order, waits for health checks, restarts crashes.
+ creditcard.csv ──► ml/train.py ──┬──► fraud_autoencoder.onnx   (the model)
+ 284,807 rows       learns and    ├──► metrics.json             (the held-out results)
+                    tests, once   └──► replay.csv               (the demo stream)
 ```
+
+**Stage 2: run the live demo.** Three programs run at once, and each one opens the files it needs.
+
+```
+ replay.csv                          fraud_autoencoder.onnx + metrics.json
+     │                                            │
+     ▼                                            ▼
+ ┌────────────────┐   1 transaction ──►   ┌────────────────────┐
+ │ Replay server  │                       │ Java API           │
+ │ Node, :8081    │   ◄── score, alert?   │ Spring Boot, :8080 │
+ └───────┬────────┘                       └────────────────────┘
+         │ pushes each result (WebSocket)
+         ▼
+ ┌────────────────┐
+ │ Dashboard      │   in your browser, :5173
+ └────────────────┘
+```
+
+**One transaction's journey (three times a second):** the replay server takes the next row of
+`replay.csv` → sends it to the Java API → the API scores it with the model and replies with the
+score and whether it's an alert → the replay server pushes the result to the dashboard.
+
+**The right-hand panel's numbers** take a different route: `metrics.json` → Java API
+(`GET /metrics`) → replay server (passes it through) → dashboard. The dashboard only ever talks
+to the replay server.
+
+`start.sh` starts the three programs in order, waits for each health check, and restarts any
+that crash.
 
 | Piece | One sentence |
 |---|---|
