@@ -7,3 +7,6 @@ data/creditcard.csv
 # Python
 .venv/
 __pycache__/
+
+# Java build output
+api/target/
