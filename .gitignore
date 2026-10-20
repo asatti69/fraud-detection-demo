@@ -16,3 +16,6 @@ node_modules/
 
 # Dashboard build output
 dashboard/dist/
+
+# start.sh logs
+logs/
