@@ -56,8 +56,8 @@ what to do if something fails live.
 | `DEMO_CHECKLIST.md` | Presentation checklist, run-of-show, and what to do if something fails live |
 | `docs/screenshots/` | Captures of the running dashboard, a backup if the live demo can't run |
 
-`data/creditcard.csv`, the [Kaggle Credit Card Fraud Detection dataset](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud),
-isn't committed because of its size (151 MB). It's only needed to retrain.
+`data/creditcard.csv` isn't committed because of its size (151 MB); download it from Kaggle
+(see [Data source and credit](#data-source-and-credit)). It's only needed to retrain.
 
 ## How the metrics were derived
 
@@ -187,6 +187,32 @@ about 11.5 minutes, then starts over.
 
 The dashboard shows whether each transaction was really fraud immediately. Banks
 usually learn that weeks later, from chargebacks.
+
+## Data source and credit
+
+This project uses the **[Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)**
+dataset published on Kaggle by the **Machine Learning Group, Université Libre de Bruxelles (ULB)**
+(`mlg-ulb`). The dataset was collected and analysed during a research collaboration between
+Worldline and the ULB Machine Learning Group on big data mining and fraud detection.
+
+- **License:** Open Database License (ODbL) for the database and Database Contents License
+  (DbCL) for its contents, as listed on the dataset page.
+- **What's in this repository:** the full dataset is *not* included. `data/replay.csv` is a
+  2,075-row subset derived from it (the test-period rows described above, plus the model's
+  scores), shared under the same terms with this attribution.
+
+The dataset's authors ask that the following works be cited (the full list is on the
+[dataset page](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)):
+
+- Andrea Dal Pozzolo, Olivier Caelen, Reid A. Johnson and Gianluca Bontempi. *Calibrating
+  Probability with Undersampling for Unbalanced Classification.* Symposium on Computational
+  Intelligence and Data Mining (CIDM), IEEE, 2015.
+- Andrea Dal Pozzolo, Olivier Caelen, Yann-Aël Le Borgne, Serge Waterschoot, Gianluca Bontempi.
+  *Learned lessons in credit card fraud detection from a practitioner perspective.* Expert
+  Systems with Applications, 41(10), 4915–4928, 2014.
+- Andrea Dal Pozzolo, Giacomo Boracchi, Olivier Caelen, Cesare Alippi, Gianluca Bontempi.
+  *Credit card fraud detection: a realistic modeling and a novel learning strategy.* IEEE
+  Transactions on Neural Networks and Learning Systems, 29(8), 3784–3797, 2018.
 
 ## Tests
 
